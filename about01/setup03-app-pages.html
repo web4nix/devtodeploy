@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        create app for the 'static' pages
+        home, about, ed
+
+        any applications can be imported inside any page (like widgets)
+        >python manage.py createapp pages
+    -->
+
+    <!--
+        register the pages app in \src\settings.py 
+                INSTALLED_APPS = [
+                    'pages.apps.PagesConfig',
+    -->
+
+    <!--
+        create a the file:  \pages\urls.py 
+                from django.urls import path
+
+                // bring in the views (create a method that is attached to view file)
+                from . import views
+
+                urlpatterns = [
+                    path('', views.index, name='index')
+                ]
+    -->
+
+    <!--
+        in the \pages\views.py:
+        create a simple html response as a view output
+        path set in the urls.py above looks for method with name index     
+                from django.shortcuts import render
+
+                # for a beginning only import HttpResponse
+                from django.http import HttpResponse
+        
+                # Create your views here.
+
+                def index(request):
+                    return HttpResponse('<h1>Hello Django Devtodeploy!')
+    -->
+
+    <!--
+        in the main (src) \src\urls.py 
+        collect all urls from pages 
+                from django.contrib import admin
+                from django.urls import path, include
+
+                urlpatterns = [
+                    path('', include('pages.urls')),
+                    path('admin/', admin.site.urls),
+                ]
+
+    -->
+
+    <!--
+        create output templates, for the views to point to
+        create in root folde    templates\
+        inside create folder    templates\pages
+        create two files        templates\pages\index.html
+                                templates\pages\about.html
+
+        
+
+        in settings.py 
+        set the path to the templates folder
+                TEMPLATES = [
+                {
+                    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                    'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
+
+        in the  \pages\urls.py
+        add url pattern for the about page  
+                path('about', views.about. name='about'),
+                
+
+
+        in the \pages\views.py
+        instead of using HttpResponse, use template with render
+    -->
+
+    <!--
+        setup a base layout for the templates structure
+        \templates\base.html
+                <!DOCTYPE ....
+                <body>
+                    {% block content %}
+                    {% endblock %}
+
+        \templates\pages\index.html
+                {% extends 'base.html' %}
+
+                {% block content %}
+                <h1>content</h1>
+                {% endblock %}
+    -->
+</body>
+</html>

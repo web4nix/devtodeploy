@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        set the path for the static files (css, js, assets)
+        create folder static
+            /src/static
+        put in the static files css,js, assets
+            /src/static/img
+            /src/static/js
+            /src/static/css
+            /src/static/webfonts
+
+
+        
+        when running collectstatic all the static files in the apps 
+        are collected into the root static folder  STATIC_ROOT 
+        set the path to point to the static folder as defined in STATIC_ROOT
+        add path to  /settings.py
+                STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+                STATIC_URL = '/static/'
+                STATICFILES_DIRS = [
+                    os.path.join(BASE_DIR, 'src/static')
+                ]
+
+        autocollect and autocreates static folder in the root
+        collecting all static files -also from admin-
+        run:
+                python manage.py collectstatic
+
+                161 static files copied to 
+                'G:\Projects\python-django\u-djangodevtodeploy\static'.
+
+
+
+        add this root static folder to gitignore (as root media folder  --/media)
+        /.gitignore
+                /static
+
+
+
+        update git repository run
+                
+    -->
+</body>
+</html>
