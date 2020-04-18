@@ -10,7 +10,186 @@
     models
     are representing the database tables
     each model is a class with properties decribing the database fields 
-    
+
+    after altering models, always run a database migration
+            python.manage.py makemigrations
+    when no errors
+            python.manage.py migrate
+
+    to show actual database SQL run  (only shows!)
+            python manage.py sqlmigrate listings 0001
+            
+
+    table is added to the database with name:    (module folder _ class)
+            listings_listing
+-->
+<!--
+        
+    def Listing(models.Model):
+        realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
+        title = models.Charfield(max_length=200)
+        address = models.Charfield(max_length=200)
+        city = models.Charfield(max_length=100)
+        state = models.Charfield(max_length=100)
+        zipcode = models.Charfield(max_length=20)
+        description = models.Textfield(blank=True)
+        price = models.Integerfield()
+        bedrooms = models.Integerfield()
+        bathrooms = models.Decimalfield(max_digits=2, decimal_places=1)
+        garage = models.Integerfield(default=0)
+        sqft = models.IntegerField()
+        lot_size = models.DecimalField(max_digits=5, decimal_places=1)
+        photo_main = models.ImageField(upload_to='photos/%Y/%m/%d')               # database is a stringfield, set an upload path, and a date 
+        photo_1 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)      # optional
+        photo_2 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True) 
+        photo_3 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True) 
+        photo_4 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)
+        photo_5 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True) 
+        photo_6 = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)
+        is_published = modelsBooleanField(default=True)
+        list_date = models.DateTimeField(default=datetime.now, blank=True)
+
+        def __str__(self):
+            return self.title
+-->
+<!--
+        Field.default
+        The default value for the field. 
+-->
+<!--
+        Field.unique
+        If True, this field must be unique throughout the table.
+-->
+<!--
+        Field.primary_key
+        If primary_key=True, this field is the primary key for the model.
+        Else Django automatically adds an AutoField to hold the primary key, 
+-->
+<!--
+        Field.null
+        If True, Django will store empty values as NULL in the database. 
+        Default is False.
+
+        Avoid using null on string-based fields such as CharField and TextField. 
+-->
+
+
+
+
+
+
+<!--
+        BooleanField
+        class BooleanField(**options)
+        A true/false field.
+
+        The default form widget for this field is CheckboxInput, 
+        or NullBooleanSelect if null=True.
+
+        The default value of BooleanField is None when Field.default isn’t defined.
+-->
+
+
+<!--
+        DateTimeField
+        class DateTimeField(auto_now=False, auto_now_add=False, **options)¶
+        A date and time, represented in Python by a datetime.datetime instance. 
+        Takes the same extra arguments as DateField.
+
+        The default form widget for this field is a single TextInput. 
+        The admin uses two separate TextInput widgets with JavaScript shortcuts
+-->
+
+<!--
+        CharField
+        class CharField(max_length=None, **options)
+-->
+
+
+<!--
+        DecimalField
+        class DecimalField(max_digits=None, decimal_places=None, **options)¶
+        
+        The maximum number of digits allowed in the number. 
+        (this number must be greater than or equal to decimal_places)
+
+        DecimalField.decimal_places
+        The number of decimal places to store with the number
+
+example: 
+to store numbers up to 999 with a resolution of 2 decimal places:
+        models.DecimalField(..., max_digits=5, decimal_places=2)
+-->
+
+<!--
+        ImageField         -- Requires the Pillow library. --
+        class ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, **options)
+        Inherits all attributes and methods from FileField, 
+        but also validates that the uploaded object is a valid image.
+
+
+        ImageField also has height and width attributes.  
+            ImageField.height_field
+                Name of a model field which will be auto-populated with the height of the image 
+                each time the model instance is saved.
+
+            ImageField.width_field
+                Name of a model field which will be auto-populated with the width of the image 
+                each time the model instance is saved.
+
+
+
+        A Database has no imagefield, this will be a stringfield (VARCHAR default max_length 100)
+
+    Example:
+    photo_main = models.ImageField(upload_to='photos/%Y/%m/%d')  
+            setting a path attached with a date, 
+
+-->
+<!--
+        IntegerField
+        class IntegerField(**options)
+        An integer. Values from -2147483648 to 2147483647 
+        are safe in all databases supported by Django.
+-->
+
+<!--
+        TextField
+        class TextField(**options)
+        A large text field. The default form widget for this field is a Textarea.
+
+        If you specify a max_length attribute, 
+        it will be reflected in the Textarea widget of the auto-generated form field. 
+        However it is not enforced at the model or database level. 
+        Use a CharField for that.
+-->
+
+
+
+<!--    Relationshipfields   -->
+
+<!--
+        ForeignKey
+        class ForeignKey(to, on_delete, **options)
+
+        A many-to-one relationship. Requires two positional arguments: 
+            the class to which the model is related and the on_delete option.
+
+        To create a recursive relationship 
+            – an object that has a many-to-one relationship with itself 
+            – use models.ForeignKey('self', on_delete=models.CASCADE).
+
+        
+        Arguments:
+        ForeignKey.on_delete=
+                CASCADE
+                also deletes the object containing the ForeignKey
+                DO_NOTHING
+                Take no action
+
+
+        When an object referenced by a ForeignKey is deleted, 
+        Django will emulate the behavior of the SQL constraint specified by the on_delete argument. 
 -->
 </body>
 </html>
