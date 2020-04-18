@@ -45,7 +45,27 @@
 
 
         update git repository run
-                
+                git add . && git commit -m 'update'
+
+    -->
+
+    <!--
+        bring the static html and the bootstrap into the templates
+        in templates/base.html
+
+        from resources/index.html  
+                -content in the head tag
+                with all bootstrat css links
+                -content of the scripts links
+                with all the js links
+
+        in top of index for the path to static folder
+                {% load static %}
+        and set the links within template tags to load static
+        path is /static/  css/all.css 
+                href="{% static 'css/all.css' %}"
+
+
     -->
 </body>
 </html>

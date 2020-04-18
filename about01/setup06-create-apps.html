@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        create apps
+                python manage.py startapp realtors
+                python manage.py startapp listings
+
+
+        register the apps in
+        src/settings.py
+               INSTALLED_APPS = [
+                    'pages.apps.PagesConfig',
+                    'realtors.apps.RealtorsConfig',
+                    'listings.apps.ListingsConfig', 
+    -->
+    <!--             
+        create template files for listings
+                /templates/listings/listings.html
+                                    /listing.html
+                                    /search.html  
+
+
+        setup the urls inside listings/urls.py
+        the url for listings looks like   /listings  
+            --as root, because /listings is set this way in src/urls.py 
+        the url for a listing look like:  /listings/123
+                urlpatterns = [
+                    path('', views.index, name='listings'),
+                    path('<int:listng_id', views.listing, name='listing'),
+                    path('search', views.search, name='search'),
+                ]
+
+
+        include the urls in the main urls file
+        src/urls.py
+                urlpatterns = [
+                    path('', include('pages.urls')),
+                    path('listings/', include('listings.urls')),
+                    path('admin/', admin.site.urls),
+                ]
+
+    -->
+    <!--
+        create the view methods that link the requests to the correct template
+        in /listings.views.py
+                from django.shortcuts import render
+
+                # Create your views here.
+
+                def index(request):
+                    return render(request, 'listings/listings.html')
+
+
+                def listing(request):
+                    return render(request, 'listings/listing.html')
+
+
+                def search(request):
+                    return render(request, 'listings/search.html')
+                
+    -->
+    <!--
+        run a test
+    -->
+    <!--
+        bring in the html from listings.html, extending the base.html
+                {% extends 'base.html' %}
+
+                {% block content %}
+                    <h1>Listings</h1>  ==> in here the static html
+                {% endblock %}
+
+    -->
+    <!--
+        alter page links in listings.html
+        when click on home in the breadcrumbs let url point to index
+        breadcrumbs
+                <li class="breadcrumb-item">
+                    <a href="index.html"> <i class="fas fa-home"></i> Home</a>
+                </li>
+
+                 <li class="breadcrumb-item">
+                    <a href="{% url 'index' %}"> <i class="fas fa-home"></i> Home</a>
+                </li>
+
+        set link in navbar for   featured listings 
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a> 
+                </li>
+        
+        use conditional for highlighting the active page, with bootastrap active class
+                <li  
+                {% if 'listings' in request.path %}
+                    class="nav-item active mr-3"
+                {% else %}
+                    class="nav-item mr-3"
+                {% endif %} >  
+                    <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a> 
+                </li>
+
+    -->
+</body>
+</html>

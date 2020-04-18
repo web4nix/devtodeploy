@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        after setting the static path and 
+        loading in the static files js, css, img using collectstatic
+        add the static html content in the templates 
+        in the base.html
+                the topbar and the navbar and the footer
+
+
+        cleaner to make a separate folder for smaller items in the base.html
+        create a templates/partials 
+        and put every part in a separate file (these pages are usually prepended with a _)
+        file _footer.html, _navbar.html, _topbar.html
+
+        using an include to load these partials into the base.html inside template tags like:
+                {% include 'partials/_topbar.html %}
+                etc ...
+
+        also bring in the path to the logo in the navbar (same way as including partials in the base.html)
+        include logo    in templates/partials/_navbar.html
+                {% load static %}
+
+                <img src="{% static 'img/logo.png' %}" class="logo" alt="" />
+
+    -->
+
+    <!--
+        get all the rest of the html from the resource for the index.html
+        copy inside /templates/pages/index.html
+
+        get all the rest of the html from the resource for the about.html
+        copy inside /templates/pages/about.html
+
+        change imagelinks. the changing images will be set from the database (dynamically)
+        do change the link of the non changing images
+        change in about  <img src="assets/img/about.jpg"  ...
+        and link from   /src/static/img/about.jpg
+                {% extends 'base.html' %}
+                {% load static %}
+                {% block content %}
+                    <img src="{% static 'img/about.jpg' %}"  alt="">
+    -->
+
+    <!--
+        link the pages:  instead  to index.html and about.html (this is not working anymore)
+        /templates/about.html
+        <breadcrumbs>
+                <a href="{% url 'index' %}">
+
+        /templates/partials/_navbar.html change the index and about links
+                <a href="{% url 'index' %}">
+                <a href="{% url 'about' %}">
+
+
+        in app pages/urls.py the urlpatterns include a name
+                urlpatterns = [
+                        path('', views,index, name='index'),
+                        path('about', views.about, name='about'),
+                ]
+
+
+                
+        To use the bootstrap class active 
+        dynamicly  highlight the link index or about on the page wich is opened
+        create a if conditional inside the template
+        testing the request path, if true include active class
+        /templates/partials/_navbar.html
+        for index
+                    {% if '/' == request.path %}
+                        class="nav-item active mr-3"
+                    {% else %}
+                        class="nav-item mr-3"
+                    {% endif %}
+        for about
+                    {% if 'about' in request.path %}
+                        class="nav-item active mr-3"
+                    {% else %}
+                        class="nav-item mr-3"
+                    {% endif %}
+    -->
+</body>
+</html>
