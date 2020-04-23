@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        /admin
+
+        create a login
+                python manage.py createsuperuser
+                        revo
+                        revoenzo
+
+    -->
+
+    <!--
+        LANGUAGE_CODE = 'nl-NL'
+
+        # TIME_ZONE = 'UTC'
+        TIME_ZONE = 'CET'
+    -->
+
+    <!-- 
+        register the models to the admin
+        in listings/admin.py
+                from .models import Listing
+
+                admin.site.register(Listing)
+
+
+        in realtors/admin.py
+                from .models import Reator
+
+                admin.site.register(Realtor)
+    -->
+    <!--
+        Create and register path to media files     (same as with the static files)
+        in src/settings.py
+                MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+                MEDIA_URL = '/media/'
+
+        Register the urls  
+        add the path to media  
+        in static(path to media url, path to media root)
+        in src/urls.py
+        # import settings file and static function
+                from django.conf import settings
+                from django.conf.urls.static import static
+
+                urlpatterns = [
+                    ...
+                ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+
+
+        uploading files from within the admin
+        is done through the widgets set by de models class
+        models.ImageField(upload_to='')
+        The mediafiles are uploaded to the media root folder
+        a folder is automatically created if there is no folder
+                /media/photos/2020/04/19/home1.jpg
+                /media/photos/2020/04/19/home1.bTfGHY.jpg      
+                            #auto adding unique code when names are the same
+
+
+
+        Inside admin add some listings and realtors for development purpose
+        
+    -->
+
+
+
+    <!--
+        Customize the admin aerea
+        put in logo and adjust colors
+
+
+        create 
+        /templates/admin/base_site.html
+                {% extends 'admin/base.html' %}     -- extend admin html
+
+                {% load static %}                -- to import logo
+
+                {% block branding %}                -- branding block
+                    <h1 id="head">Devtodeploy</h1>    -- set id to use in css
+                {% endblock %}
+
+      
+
+        title and logo:
+                {% extends 'admin/base.html' %}  
+
+                {% load static %}    
+
+                {% block branding %}  
+                    <h1 id="head">
+                        <img src="{% static 'img/logo.png'%}" alt="" 
+                        width=80 height=50 class="brand_img">
+                        Devtodeploy
+                    </h1>
+                {% endblock %}
+
+        img will take up all width, so set explicit width and height !
+
+        to add css to this page:
+        /templates/admin/base_site.html
+                {% block extrastyle %}
+                <link rel="stylesheet" href="{% static 'css/admin.css' %}"
+                {% endblock %}
+
+
+
+        create
+        src/static/css/admin.css
+   
+        Check in chrome the name of the fields
+        change them in this file to override the css
+        bootstrap.css holds the styling of the site
+        use the colors defined for the site also for the admin page
+
+        title name had id="head"
+                #header {
+                    height: 50px;
+                    background: #10284e;
+                    color: #fff;
+                }
+
+                #branding h1 {
+                    color: #fff;
+                }
+    
+                a:link,
+                a:visited {
+                    color: #10284e;
+                }
+
+                div.breadcrumbs {
+                    background: #30caa0;
+                    color: #10284e;
+                }
+                
+                div.breadcrumbs a {
+                    color: #333;
+                }
+
+
+        find in chrome
+        elements -caption- tag
+        copy from chrome styles the classes and tags of caption 
+        click is select, than copy */
+
+                .module h2, .module caption, .inline-group h2 {
+                    background-color: #30caa0;
+                }
+                etc ...
+    -->
+</body>
+</html>

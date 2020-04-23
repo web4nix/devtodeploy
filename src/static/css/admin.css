@@ -1,0 +1,58 @@
+#header {
+    height: 50px;
+    background: #10284e;
+    color: #fff;
+}
+
+#branding h1 {
+    color: #fff;
+}
+
+a:link,
+a:visited {
+    color: #10284e;
+}
+
+h1, 
+.module h2,
+a.section:link, 
+a.section:visited,
+.object-tools a:link, 
+.object-tools a:visited {
+    font-weight:600;
+}
+
+div.breadcrumbs {
+    background: #30caa0;
+    color: #10284e;
+    font-weight:600;
+}
+
+div.breadcrumbs a {
+    color: #333;
+}
+
+div.breadcrumbs a:hover {
+    color: #fff;
+}
+
+/* find in chrome
+  elements -caption- tag
+  copy from chrome styles the classes and tags of caption 
+  -inspect element-
+  click is select, than copy */
+
+.module h2, .module caption, .inline-group h2 {
+    background: #30caa0;
+}
+
+/* inspect button element in chrome
+copy button classes -click, copy */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #30caa0;
+    font-weight:500;
+    font-size: 15px;
+}
+.button.default, input[type=submit].default, .submit-row input.default {
+    font-weight:400;
+}

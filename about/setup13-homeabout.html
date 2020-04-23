@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        the homepage and about page are set within the views.py of the pages app
+        to retrieve the three 
+        in pages/views.py
+        and templates/pages/index.html
+
+        to view three listings (without the unpublished!) import Listings class
+        set a filter for is_published, set an ordering and a max of three
+        to recieve the data:
+        in pages/views.py
+            def index(request):
+                #return HttpResponse('<h1>Hello Django Devtodeploy!')
+                listings = Listing.objects.order_by('-list_date').filter(is_published=True)[:3] 
+                return render(request, 'pages/index.html')
+
+
+        loop over data and display
+        in templates/pages/index.html  
+
+                            <div class="row">
+            
+            {% if listings %}
+                {% for listing in listings %}
+                      Listing 1 
+                     <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card listing-preview">
+                            <img class="card-img-top" src="assets/img/homes/home-1.jpg" alt="" />
+                            <div class="card-img-overlay">
+                                <h2>
+                                    <span class="badge badge-secondary text-white">$490,000</span>
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="listing-heading text-center">
+                                    <h4 class="text-primary">45 Drivewood Circle</h4>
+                                    <p>
+                                        <i class="fas fa-map-marker text-secondary"></i>
+                                        Norwood MA, 02062
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-6">
+                                        <i class="fas fa-th-large"></i> Sqft: 2500
+                                    </div>
+                                    <div class="col-6"><i class="fas fa-car"></i> Garage: 2</div>
+                                </div>
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-6"><i class="fas fa-bed"></i> Bedrooms: 3</div>
+                                    <div class="col-6"><i class="fas fa-bath"></i> Bathrooms: 2</div>
+                                </div>
+                                <hr />
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-6"><i class="fas fa-user"></i> Kyle Brown</div>
+                                </div>
+                                <div class="row text-secondary pb-2">
+                                    <div class="col-6"><i class="fas fa-clock"></i> 5 days ago</div>
+                                </div>
+                                <hr />
+                                <a href="listing.html" class="btn btn-primary btn-block">More Info</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>No listings available</p>
+                </div>
+            {% endif%}
+    -->
+
+    <!-- 
+        and make the fields dynamic
+        same as templates/listings/listings.html
+
+    -->
+
+    <!--
+        for the about page
+        retrieve the data in 
+        pages/views.py
+            from realtors.models import realtor
+
+            def about(request):
+                # get all realtors
+                realtors = Realtor.objects.order_by('-hire_date')
+                # get seller of the month (can be more than one)
+                # as this is set and showed in admin -set a realtor in /admin as mvp to check!
+                mvp_realtors = Realtor.objects.all().filter(is_mvp=True)
+                # context is both above
+                context = { 'realtors': realtors, 'mvp_realtors': mvp_realtors }
+                return render(request, 'pages/about.html', context) 
+
+        set a realtor as mvp of the month in the admin
+    -->
+    <!--
+        set template tags in the static html for loading dynamic database values
+        for realtor of the month
+
+                <div class="col-md-4">
+                {% if mvp_realtors %}
+                {% for realtor in mvp_realtors %}
+                <div class="card">
+                    <img class="card-img-top" src="{{ realtor.photo.url }}" alt="Seller of the month"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Seller Of The Month</h5>
+                        <h6 class="text-secondary">{{ realtor.name }}</h6>
+                        <p class="card-text">{{ realtor.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+        
+
+                
+        for list of realtors:
+
+                <h2 class="text-center">Our Team</h2>
+                <div class="row text-center">
+                {% if realtors %}
+                    {% for realtor in realtors %}
+                    <div class="col-md-4">
+                    <img src="{{ realtor.photo.url }}" alt="" class="rounded-circle mb-3"/>
+                    <h4>{{ realtor.name }}</h4>
+                    <p class="text-success"><i class="fas fa-award text-success mb-3"></i> Realtor</p>
+                    <hr />
+                    <p><i class="fas fa-phone"></i> {{ realtor.phone }}</p>
+                    <p><i class="fas fa-envelope-open"></i> {{ realtor.email }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="col-md-12">
+                    <p>No realtors available</p>
+                </div>
+                {% endif %}
+    -->
+</body>
+</html>

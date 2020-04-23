@@ -12,7 +12,7 @@
 </body>
 </html>
 -->
-
+{% load humanize %}
 
 
 {% block content %}
@@ -31,7 +31,7 @@
                     Consectetur, id commodi!
                 </p>
                 <div class="search">
-                    <form action="search.html">
+                    <form action="{% url 'search' %}">   <!-- go to search template -->
                         <!-- Form Row 1 -->
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
@@ -49,6 +49,10 @@
                                 <label class="sr-only">State</label>
                                 <select name="state" class="form-control">
                                     <option selected="true" disabled="disabled">State (All)</option>
+                                    {% for key,value in state_choices.items %}
+                                        <option value="{{key}}">{{ value }}</option>
+                                    {% endfor %}
+                                    <!--    
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -100,6 +104,7 @@
                                     <option value="WV">West Virginia</option>
                                     <option value="WI">Wisconsin</option>
                                     <option value="WY">Wyoming</option>
+                                    -->
                                 </select>
                             </div>
                         </div>
@@ -108,6 +113,10 @@
                             <div class="col-md-6 mb-3">
                                 <label class="sr-only">Bedrooms</label>
                                 <select name="bedrooms" class="form-control">
+                                    {% for key,value in bedroom_choices.items %}
+                                        <option value="{{key}}">{{ value }}</option>
+                                    {% endfor %}
+                                    <!--
                                     <option selected="true" disabled="disabled">Bedrooms (All)</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -119,10 +128,15 @@
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                     <option value="10">10</option>
+                                    -->
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <select name="price" class="form-control" id="type">
+                                    {% for key,value in price_choices.items %}
+                                        <option value="{{key}}">{{ value }}</option>
+                                    {% endfor %}
+                                    <!--
                                     <option selected="true" disabled="disabled">Max Price (Any)</option>
                                     <option value="100000">$100,000</option>
                                     <option value="200000">$200,000</option>
@@ -134,6 +148,7 @@
                                     <option value="800000">$800,000</option>
                                     <option value="900000">$900,000</option>
                                     <option value="1000000">$1M+</option>
+                                    -->
                                 </select>
                             </div>
                         </div>
@@ -151,8 +166,58 @@
 <section id="listings" class="py-5">
     <div class="container">
         <h3 class="text-center mb-3">Latest Listings</h3>
-        <div class="row">
-            <!-- Listing 1 -->
+        
+        <div class="row">  
+            {% if listings %}
+                {% for listing in listings %}
+                     <!-- Listing 1 -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card listing-preview">
+                            <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+                            <div class="card-img-overlay">
+                                <h2>
+                                    <span class="badge badge-secondary text-white">€ {{ listing.price | intcomma }}</span>
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="listing-heading text-center">
+                                    <h4 class="text-primary">{{ listing.title}}</h4>
+                                    <p>
+                                        <i class="fas fa-map-marker text-secondary"></i>
+                                        {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}
+                                    </p>
+                                </div>
+                                <hr />
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-6">
+                                        <i class="fas fa-th-large"></i> Sqft: {{ listing.sqft }}
+                                    </div>
+                                    <div class="col-6"><i class="fas fa-car"></i> Garage: {{ listing.garage }}</div>
+                                </div>
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-6"><i class="fas fa-bed"></i> Bedrooms: {{ listing.bedrooms }}</div>
+                                    <div class="col-6"><i class="fas fa-bath"></i> Bathrooms: {{ listing.bathrooms }}</div>
+                                </div>
+                                <hr />
+                                <div class="row py-2 text-secondary">
+                                    <div class="col-12"><i class="fas fa-user"></i> {{ listing.realtor }}</div>
+                                </div>
+                                <div class="row text-secondary pb-2">
+                                    <div class="col-12"><i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
+                                </div>
+                                <hr />
+                                <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>No listings available</p>
+                </div>
+            {% endif%}
+
+            <!-- Listing 1 
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
                     <img class="card-img-top" src="assets/img/homes/home-1.jpg" alt="" />
@@ -192,8 +257,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Listing 2 -->
+            -->
+            <!-- Listing 2
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
                     <img class="card-img-top" src="assets/img/homes/home-2.jpg" alt="" />
@@ -235,8 +300,9 @@
                     </div>
                 </div>
             </div>
+            -->
 
-            <!-- Listing 3 -->
+            <!-- Listing 3 
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
                     <img class="card-img-top" src="assets/img/homes/home-3.jpg" alt="" />
@@ -274,7 +340,8 @@
                         <a href="listing.html" class="btn btn-primary btn-block">More Info</a>
                     </div>
                 </div>
-            </div>
+            </div> 
+            -->
         </div>
     </div>
 </section>

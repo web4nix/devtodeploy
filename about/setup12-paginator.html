@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        install and setup builtin paginator
+        in listings/views.py
+        import paginator 
+        in de listings index def
+            --set a variable paginator set to class Paginator(Listings, 3) with three listings objects
+            --set a variable page to click for a page (back and forth)
+              set to a request of GET and function get('page')
+            --set a variable for in the context variable to
+              call paginator variable (set to retrieve three objects from Listings)
+              with get_page(page)
+        so that in listings the page(listings) is shown that is called in the pagination
+        with default page set 
+
+        get_page()
+        has_next()
+        has_previous
+        has_other_pages()
+        next_page_number()
+        previous_page_number()
+        start_index()
+        end_index()
+        num_pages()
+        
+        in listings/views.py
+            def index(request):
+                listings = Listing.objects.all()
+                # set number of Listings items
+                paginator = Paginator(Listings, 3)
+                # GET request for a page using get()
+                page = request.GET.get('page')
+                paged_listings = paginator.get_page(page)
+                # as context, instead of all listings, only the page requested
+                context = {'listings': paged_listings}
+                return render(request, 'listings/listings.html', context)
+
+        in the template/listings
+        with the variable page in the link for the url:  ?page=
+        now showing only the first three items on the page
+    -->
+    <!--
+        set the paginator in the bottom div with class pagination
+        templates/listings/listings.html
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- if there are more pages -->
+        {% if listings.has_other_pages %}
+        <ul class="pagination">
+          
+          <!-- check for previous pages, 
+          if previous set link to previous else set class to disabled-->
+          {% if listings.has_previous %} 
+          <li class="page-item"> 
+            <a href="?page={{listings.previous_page_number}}" class="page-link">&laquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">&laquo</a>
+          </li>
+          {% endif %}
+          
+          <!-- loop through the page range, showing page numbers -->
+          {% for i in listings.paginator.page_range %}
+            {% if listings.number == i %}
+            <li class="page-item active">
+              <a class="page-link">{{i}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a href="?page={{i}}" class="page-link">{{i}}</a>
+            </li>
+            {% endif %}
+          {% endfor %}
+
+          <!-- check for next pages, 
+          if has_next pages set link to next else set class to disabled -->
+          {% if listings.has_next %}
+          <li class="page-item">
+            <a href="?page={{listings.next_page_number}}" class="page-link">&raquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">&raquo;</a>
+          </li>
+          {% endif %}
+
+        </ul>
+        {% endif %}
+
+    </div>
+</div>
+    -->
+
+    
+
+</body>
+</html>

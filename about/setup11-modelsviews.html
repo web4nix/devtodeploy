@@ -1,0 +1,204 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+<!--
+    setup to show the  data from the database instead of only the static markup 
+
+    client sends a request within the browser as url
+    url is read in urls.py, if accepted(found), calls a method set to this url inside the view
+    in the view, the model is imported(the database), when needed it collects data from database
+    and calls the template for this request
+    then the templates outputs the complete page:
+
+    in listings/urls.py the url input calls  in views.py the def index function
+        path('', views.index, name='listings'),
+
+    in listings/views.py the index function calls template  listings/listings.html
+        def index(request):
+        return render(request, 'listings/listings.html')
+
+-->
+<!--
+    define in the view, wich data from the models should be included in the template call
+    import the model in
+    listings/views.py
+            from .models import Listing
+
+    create a context variable in the def that holds the data to be fetched
+            def index(request): 
+                context = { 'name': 'revo' }
+                return render(request, 'listings/listings.html', context)
+
+
+    The context is send together with the template call  
+    inside the template the context can be made visual within  {{ }}
+
+    templates/listings/listings.html
+            {{ name }}
+
+
+    if name REVO shows it all works correct
+-->
+
+<!--
+    to retrieve date from the database  (the models properties) in the view  methods
+    use buit-in (query)functions
+    in listings/views.py
+            from .models import Listing
+
+            def index(request, Listing):
+                lisings = Listing.object.all()
+                context = { 'listings': listings }                             
+                return render(request, 'listings/listings.html', context)
+
+
+    output in templates/listings/listings.html    {{ listings }}    as the variable
+    is all objects:
+            <QuerySet [
+                <Listing: 45 Drivewood Circle>, 
+                <Listing: 18 Jefferson Lane>, 
+                <Listing: 187 Woodrow Street>, 
+                <Listing: 3 Jefferson Lane>, 
+                <Listing: 12 United Road>, 
+                <Listing: 33 Essex Circle>, 
+                <Listing: 28 Gifford Street>]>
+
+
+    
+-->
+<!--
+    in the template create a template tag with if listings is true
+    iterate over all listings (for(listing in listings)). 
+    The loop is as long as the listings object retrieved from the database.
+    the iteration will put out the same html for the length number of times
+    templates/listings/listings.html
+            {% extends 'base.html' %} 
+
+            {% block content %}
+
+
+            <section id="listings" class="py-4">
+            <div class="container">
+            <div class="row">
+            
+            {% if listings %}
+            {% for listing in listings %}
+                
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card listing-preview">
+                    <img class="card-img-top" src="assets/img/homes/home-1.jpg" alt="" />
+                    <div class="card-img-overlay">
+                    <h2>
+                        <span class="badge badge-secondary text-white">$490,000</span>
+                    </h2>
+                    </div>
+                    <div class="card-body">
+                    <div class="listing-heading text-center">
+                        <h4 class="text-primary">45 Drivewood Circle</h4>
+                        <p>
+                        <i class="fas fa-map-marker text-secondary"></i> Norwood MA, 02062
+                        </p>
+                    </div>
+                    <hr />
+                    <div class="row py-2 text-secondary">
+                        <div class="col-6">
+                        <i class="fas fa-th-large"></i> Sqft: 3200
+                        </div>
+                        <div class="col-6"><i class="fas fa-car"></i> Garage: 2</div>
+                    </div>
+                    <div class="row py-2 text-secondary">
+                        <div class="col-6"><i class="fas fa-bed"></i> Bedrooms: 3</div>
+                        <div class="col-6"><i class="fas fa-bath"></i> Bathrooms: 2</div>
+                    </div>
+                    <hr />
+                    <div class="row py-2 text-secondary">
+                        <div class="col-12"><i class="fas fa-user"></i> Kyle Brown</div>
+                    </div>
+                    <div class="row text-secondary pb-2">
+                        <div class="col-6"><i class="fas fa-clock"></i> 2 days ago</div>
+                    </div>
+                    <hr />
+                    <a href="listing.html" class="btn btn-primary btn-block">More Info</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+                <p>No listings available</p>
+            </div>
+            {% endif %}
+
+            {% endblock %}
+-->
+<!--
+    next is to replace the hardcoded values in the html, 
+    for the variables of the database model  (and adjust where nessessary to the right output):
+
+            <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+            {{ listing.title }}
+
+
+    to add a comma in the price
+    add to src/settings.py 
+    in  INSTALLED_APPS
+                'django.contrib.humanize'
+
+    add to templates/listings/listings.html 
+            {% load humanize %} 
+
+            € {{ listing.price | intcomma }}    # depending on the localization in settings.py
+                                              # output is a comma or a point
+
+
+            {{ listing.realtor }}    # because realtor class returns self.name, this displays the name of the realtor
+
+            {{ listing.list_date | timesince }}    # using humanize 
+
+
+    correct the more-info link to listing page
+    url looks like:  /listings/id
+            <a href="{% url 'listing' listing.id %}"    # set url to name 'listing' adding the listing.id
+
+    in listings/views.py the database id is set  as argument in the function for the template call:
+            def listing(request, listing_id):
+                return render(request, 'listings/listing.html')
+
+    This links opens in url  /listings/<id>   
+        the page listings/listing
+    -->
+
+
+
+    <!--
+        set the order of how the listings are shown (by date, price, etc)
+        instead retrieve all()  database objecs
+        retrieve with a order_by()
+        in listings/views.py
+            def index(request):
+                listings = Listing.objects.order_by('-list_date')
+
+        where an underscore sets last date first
+
+    -->
+    <!--       
+         filter in the admin 
+        when option is published is unchecked, the listing should not be shown
+
+        in listings/views.py 
+        de listings are retrieved from the database in a specified order
+        here you can also add a filter
+        in listings/views.py
+            def index(request):
+                listings = Listing.objects.order_by('-list_date').filter(is_published=True)
+    -->
+
+  </body>
+</html>

@@ -1,6 +1,9 @@
-{% extends 'base.html' %} {% block content %}
-<!-- <h1>Listings</h1> -->
+{% extends 'base.html' %} 
+{% load humanize %} 
 
+{% block content %}
+<!-- <h1>Listings</h1> -->
+<!--{{ listings }}-->
 <section id="showcase-inner" class="py-5 text-white">
   <div class="container">
     <div class="row text-center">
@@ -34,49 +37,61 @@
   <div class="container">
     <div class="row">
       <!-- Listing 1 -->
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card listing-preview">
-          <img class="card-img-top" src="assets/img/homes/home-1.jpg" alt="" />
-          <div class="card-img-overlay">
-            <h2>
-              <span class="badge badge-secondary text-white">$490,000</span>
-            </h2>
-          </div>
-          <div class="card-body">
-            <div class="listing-heading text-center">
-              <h4 class="text-primary">45 Drivewood Circle</h4>
-              <p>
-                <i class="fas fa-map-marker text-secondary"></i> Norwood MA,
-                02062
-              </p>
-            </div>
-            <hr />
-            <div class="row py-2 text-secondary">
-              <div class="col-6">
-                <i class="fas fa-th-large"></i> Sqft: 3200
+      {% if listings %}
+        {% for listing in listings %}
+          <!-- html of 1 listing here, 
+            result is same as the static html with all listings typed out -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card listing-preview">
+              <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+              <div class="card-img-overlay">
+                <h2>
+                  <span class="badge badge-secondary text-white">€ {{ listing.price | intcomma }}</span>
+                </h2>
               </div>
-              <div class="col-6"><i class="fas fa-car"></i> Garage: 2</div>
+              <div class="card-body">
+                <div class="listing-heading text-center">
+                  <h4 class="text-primary">{{ listing.title }}</h4>
+                  <p>
+                    <i class="fas fa-map-marker text-secondary"></i>
+                    {{ listing.city }} 
+                    {{ listing.state }},
+                    {{ listing.zipcode }}
+                  </p>
+                </div>
+                <hr />
+                <div class="row py-2 text-secondary">
+                  <div class="col-6">
+                    <i class="fas fa-th-large"></i> Sqft: {{ listing.sqft }}
+                  </div>
+                  <div class="col-6"><i class="fas fa-car"></i> Garage: {{ listing.garage }}</div>
+                </div>
+                <div class="row py-2 text-secondary">
+                  <div class="col-6"><i class="fas fa-bed"></i> Bedrooms: {{ listing.bedrooms }}</div>
+                  <div class="col-6"><i class="fas fa-bath"></i> Bathrooms: {{ listing.bathrooms }}</div>
+                </div>
+                <hr />
+                <div class="row py-2 text-secondary">
+                  <div class="col-12"><i class="fas fa-user"></i> {{ listing.realtor }}</div>
+                </div>
+                <div class="row text-secondary pb-2">
+                  <div class="col-12"><i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
+                </div>
+                <hr />
+                <!--<a href="" class="btn btn-primary btn-block">More Info {{ listing.id }}</a>-->
+                <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info {{ listing.id }}</a>
+              </div>
             </div>
-            <div class="row py-2 text-secondary">
-              <div class="col-6"><i class="fas fa-bed"></i> Bedrooms: 3</div>
-              <div class="col-6"><i class="fas fa-bath"></i> Bathrooms: 2</div>
-            </div>
-            <hr />
-            <div class="row py-2 text-secondary">
-              <div class="col-12"><i class="fas fa-user"></i> Kyle Brown</div>
-            </div>
-            <div class="row text-secondary pb-2">
-              <div class="col-6"><i class="fas fa-clock"></i> 2 days ago</div>
-            </div>
-            <hr />
-            <a href="listing.html" class="btn btn-primary btn-block"
-              >More Info</a
-            >
           </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-md-12">
+          <p>No listings available</p>
         </div>
-      </div>
+      {% endif %}
+      
 
-      <!-- Listing 2 -->
+      <!-- Listing 2 
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card listing-preview">
           <img class="card-img-top" src="assets/img/homes/home-2.jpg" alt="" />
@@ -119,9 +134,9 @@
             >
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <!-- Listing 3 -->
+      <!-- Listing 3
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card listing-preview">
           <img class="card-img-top" src="assets/img/homes/home-3.jpg" alt="" />
@@ -161,9 +176,9 @@
             >
           </div>
         </div>
-      </div>
+      </div>  -->
 
-      <!-- Listing 4 -->
+      <!-- Listing 4 
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card listing-preview">
           <img class="card-img-top" src="assets/img/homes/home-4.jpg" alt="" />
@@ -204,9 +219,9 @@
             >
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <!-- Listing 5 -->
+      <!-- Listing 5 
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card listing-preview">
           <img class="card-img-top" src="assets/img/homes/home-5.jpg" alt="" />
@@ -249,9 +264,9 @@
             >
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <!-- Listing 6 -->
+      <!-- Listing 6 
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card listing-preview">
           <img class="card-img-top" src="assets/img/homes/home-6.jpg" alt="" />
@@ -294,11 +309,56 @@
             >
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
+    </div> 
 
     <div class="row">
       <div class="col-md-12">
+        <!-- if there are more pages -->
+        {% if listings.has_other_pages %}
+        <ul class="pagination">
+          
+          <!-- check for previous pages, 
+          if previous set link to previous else set class to disabled-->
+          {% if listings.has_previous %} 
+          <li class="page-item"> 
+            <a href="?page={{listings.previous_page_number}}" class="page-link">&laquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">&laquo</a>
+          </li>
+          {% endif %}
+          
+          <!-- loop through the page range, showing page numbers -->
+          {% for i in listings.paginator.page_range %}
+            {% if listings.number == i %}
+            <li class="page-item active">
+              <a class="page-link">{{i}}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a href="?page={{i}}" class="page-link">{{i}}</a>
+            </li>
+            {% endif %}
+          {% endfor %}
+
+          <!-- check for next pages, 
+          if has_next pages set link to next else set class to disabled -->
+          {% if listings.has_next %}
+          <li class="page-item">
+            <a href="?page={{listings.next_page_number}}" class="page-link">&raquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link">&raquo;</a>
+          </li>
+          {% endif %}
+
+        </ul>
+        {% endif %}
+
+        <!--
         <ul class="pagination">
           <li class="page-item disabled">
             <a class="page-link" href="#">&laquo;</a>
@@ -316,6 +376,8 @@
             <a class="page-link" href="#">&raquo;</a>
           </li>
         </ul>
+        -->
+        
       </div>
     </div>
   </div>

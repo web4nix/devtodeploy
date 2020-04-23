@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        customize the admin 
+        choose wich properties of Listing and Realtor must be showed in admin
+        decide on what properties can be filtered, and
+        wich properties must link to their page
+        
+        in listings/admin.py
+
+                class ListingAdmin(admin.ModelAdmin):
+                    list_display = ('id', 'title', 'is_published', 'price', 'list_date', 'realtor')
+                    list_display_links = ('id', 'title')
+                    list_filter = ('realtor',)            # tuple
+                    list_editable = ('is_published',)        #tuple
+                    search_fields = ('title', 'description', 
+                        'address', 'city', 'state', 'zipcode', 
+                        'price')
+                    list_per_page = 25
+
+                admin.site.register(Listing, ListingAdmin)
+
+        # (register also the ListingAdmin class)
+        # list_filter() is a tuple and MUST end with a comma !
+    -->
+</body>
+</html>
