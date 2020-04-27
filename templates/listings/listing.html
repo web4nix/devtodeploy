@@ -36,7 +36,7 @@
       </nav>
     </div>
   </section>
-
+  {% include 'partials/_messages.html' %}
   <!-- Listing -->
   <section id="listing" class="py-4">
     <div class="container">
@@ -184,16 +184,17 @@
             
             <div class="form-group">
               <label for="property_name" class="col-form-label">Property:</label>
-              <input type="text" name="listing" class="form-control" value="{{ listing.title }}" disabled>
-            </div>
+              <input type="text" name="listing" class="form-control" value="{{ listing.title }}" readonly>
+            </div><!-- setting the form input field to disabled, so the title can not be changed or set
+            set to readonly will be the listing the user want to be inquired about  -->
             
             <div class="form-group">
               <label for="name" class="col-form-label">Name:</label>
               <input type="text" name="name" class="form-control" 
                         {% if user.is_authenticated %} 
                         value="{{  user.username }}" 
-                        {% endif %} required>      <!--{{ user.first_name }}{{ user,last_name }}-->
-            </div>
+                        {% endif %} required>      
+            </div><!-- or when used:  {{ user.first_name }}{{ user.last_name }} -->
             <div class="form-group">
               <label for="email" class="col-form-label">Email:</label>
               <input type="email" name="email" class="form-control" 

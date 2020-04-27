@@ -3,7 +3,7 @@ from django.contrib import messages, auth
 # import User model to check if user exists in the database
 from django.contrib.auth.models import User
 # import the login method is attribute of auth
-
+from contacts.models import Contact
 
 # Create your views here.
 
@@ -93,6 +93,11 @@ def logout(request):
 
 
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    # retrieve the id of the logged in user and the date of inquiry
+    # bring in the Contacts model order on date
+    # filter where loggedin user (request.user.id is same as user_id of database)
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    context = { 'contacts': user_contacts }
+    return render(request, 'accounts/dashboard.html', context)
 
 
