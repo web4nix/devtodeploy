@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        accounts
+        get the dasboard dynamic, bring in the user messages
+        accounts/views.py
+                from django.shortcuts import render, redirect
+                from django.contrib import messages, auth
+                # import User model to check if user exists in the database
+                from django.contrib.auth.models import User
+                # import the login method is attribute of auth
+                from contacts.model import Contact
+    -->
+    <!--
+        templates/acccounts/dashboard.html
+        you can user object  anywhere
+                Welcome {{ user.username }}
+            
+        loop dynamic over the inquiries
+
+
+        <section id="dashboard" class="py-4">
+        <div class="container">
+            <div class="row">
+            <div class="col-md-12">
+                <!-- messages -->
+                {% include 'partials/_messages.html' %}
+                <h2>Welcome {{ user.username }}</h2>
+                {% if contacts %}
+                <p>Here are the property listings that you have inquired about</p>
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Property</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.listing }}</td>
+                    <td>
+                        <a class="btn btn-light" href="{% url 'listing' contact.listing_id %}">View Listing</a>
+                    </td>
+                    </tr>
+                    
+                    {% endfor %}
+        
+                    <!--  
+                    <tr>
+                    <td>43</td>
+                    <td>22 Westbrook rd</td>
+                    <td>
+                        <a class="btn btn-light" href="#">View Listing</a>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>31</td>
+                    <td>12 Samson Ave</td>
+                    <td>
+                        <a class="btn btn-light" href="#">View Listing</a>
+                    </td>
+                    </tr>
+                -->
+                </tbody>
+                </table>
+                {% else %}
+                <div>You did not make any inquiries</div>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+        </section> 
+ 
+
+    -->
+</body>
+</html>

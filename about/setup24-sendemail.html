@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        handle the submission of the inquiry form
+        
+
+
+
+                def contact(request):
+                    if request.method == 'POST':
+                        # if post, capture the fields, naming is for database table contact
+                        listing_id = request.POST['listing_id']
+                        listing = request.POST['listing']
+                        name = request.POST['name']
+                        email = request.POST['email']
+                        phone = request.POST['phone']
+                        message = request.POST['message']
+                        user_id = request.POST['user_id']
+                        realtor_email = request.POST['realtor_email']
+
+                        #set to database variable by adding the property values to the model class
+                        contact = Contact(listing=listing, listing_id=listing_id, name=name, email=email,
+                                    phone=phone,message=message, user_id=user_id)
+                        #save it
+                        contact.save()
+                        #return a message --must be recievable in the page where redirect goes--
+                        messages.success(request, 'Thank you for your request, a realtor will take contact soon')
+
+                        #redirect to page of the listing where the inquiry was about 
+                        return redirect('/listings/'+listing_id)
+                        #return redirect('/listing/'+listing_id)
+    -->
+
+    <!--
+        make sure a second inquiry is not possible  ???  --only check possible against log in user
+        (resubmitting the form not possible in django)
+    -->
+    <!--
+        set email configuration in the src/settings.py
+                #Email config
+                EMAIL_HOST = 'smtp.gmail.com'
+                EMAIL_PORT = 587
+                EMAIL_HOST_USER = 'r.voorsmit@gmail.com'
+                EMAIL_HOST_PASSWORD = 'revoenzo'
+                EMAIL_USE_TLS = True
+    -->
+    <!--
+        import settings in contacts/views.py
+                from django.core.mail import send_mail
+
+                #send mail  -head, -body, -sendto(settings.py), list of addresses, errormessages on or off
+                send_mail(
+                    'Property Listing Inquiry',
+                    'There has been an inquiry for' + listing + '. Sign in to the admin panel for more info',
+                    'r.voorsmit@gmail.com',
+                    [realtor_email, 'renevoorsmit@gmail.com'],
+                    fail_silently=False
+
+                )
+    -->
+</body>
+</html>
