@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!--
+    create app  accounts
+
+    django has buildin user system with rights for users
+    create templates/accounts/login.html
+                            /register.html
+                            /dashboard.html
+
+    in src/settingspy  
+    register the app
+    
+    
+    create accounts/urls.py
+            from . import views
+
+            urlpatterns = [
+                path -login
+                path -register
+                path -logout
+                path -dashboard
+            ]
+
+    in src/urls.py    register the accounts urls
+
+
+    in accounts/views.py
+    create the methods that point to the templates
+    where logout is not a page but a redirect to
+    
+          from django.shortcuts import render, redirect
+
+          def register():
+
+          def login():
+
+          def logout():
+            return redirect('index')         --redirect
+
+          def dashboard():
+
+
+    update the html-markup-links in the navbar for login and register to link to the templates
+    and with a template tag if, set class to active 
+    when clicked and directed to page, highllight link active page
+        <li {% if 'login' %}
+          class="nav-item avtive mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        (% endif %) >
+
+
+  -->
+
+
+  <!--
+      bring in the static markup from login and register, in a content block
+
+            {% extends 'base.html' %}
+            {% block content %}
+            ...html markup
+            {% endblock %}
+
+
+      change the action links in:
+      register.html
+          action="{% url 'register %}"
+      login.html
+           action="{% url 'login %}"
+
+
+      default forms are sending GET request 
+      change method to POST
+
+      ty the usersession to the form with a token preventing crosssite forgery
+          <form action=...>{% csrf_token %}
+
+
+      Test in views to make sure the recieving is a POST in the cmd line of the server 
+      in def register
+            if request.method == 'POST':
+              print('submitted registration')
+              return redirect('register')
+            else:
+              return render(request, 'acconts/register.html')
+  -->
+</body>
+</html>

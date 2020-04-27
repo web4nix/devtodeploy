@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        create app contacts and register app in settings.py
+
+        create the contacts/model.py
+
+        after changing the model always makemigrations
+
+        register the model Contact to the admin
+        and define what and how the properties are visible
+    -->
+    <!--
+        contacts/models.py
+                from django.db import models
+                from datetime import datetime
+                # Create your models here.
+
+
+                class Contact(models.Model):
+                    listing = models.CharField(max_length=200)
+                    listing_id = models.IntegerField()
+                    name = models.CharField(max_length=200)
+                    email = models.CharField(max_length=100)
+                    phone = models.CharField(max_length=100)
+                    message = models.TextField(blank=True)
+                    contact_date = models.DateTimeField(default=datetime.now, blank=True)
+                    # not every user is loged in when making inquiry
+                    # but when than track id (so blank=True)
+                    user_id = models.IntegerField(blank=True)
+                    def __str__(self):
+                        return self.name
+    -->
+    <!--
+        contacts/admin.py
+                from django.contrib import admin
+                from .models import Contact 
+                # Register your models here.
+
+
+                # class for properties to show in admin:
+                class ContactAdmin(admin.ModelAdmin):
+                    list_display = ('id', 'name', 'listing', 'email', 'contact_date')
+                    list_display_links = ('id', 'name')
+                    search_fields = ('name', 'email', 'listing')
+                    list_per_page = 25
+
+                admin.site.register(Contact)
+    
+    -->
+    <!--
+        contacts are not directly added in the admin, but will come from the inquiry
+    
+    
+    -->
+
+
+
+</body>
+</html>

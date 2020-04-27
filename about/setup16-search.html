@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!--
+    make a query through the data in listings/views.py  def search()
+    to check if search item exists in the database
+    fetch the search values from the url
+    loop over databasedata using a filter ( price, city, bedroom )
+    then chenk if a value is found that matches value in url
+  -->
+  <!--
+      def search(request):
+      #listings = Listing.objects.order_by('-list_date').filter(is_published=True)
+      # define a query depending on a filter                        also filter on if published !!!
+      # search for a keyword if exists make a GET request
+      queryset_list = Listing.objects.order_by('-list_date').filter(is_published=True)
+
+      #keywords, filter on keeywords
+      if 'keywords' in request.GET:
+          # make a variable keywords, retrieving the value from the keywords varibla in the url
+          keywords = request.GET['keywords']
+          # make sure not empty list
+          if keywords:
+              # take querysetlist and set a filter
+              # search description, is not an exact match, use __ after the field we search
+              queryset_list = queryset_list.filter(description__icontains=keywords)
+
+      # for city use exact comparing
+      # using __iexact  the comare is case insensetive
+      if 'city' in request.GET:
+          city = request.GET['city']
+          if city:
+              queryset_list = queryset_list.filter(city__iexact=city)
+
+      #Filter by max bedrooms
+      #  __lte  (less then or equel)  --search up to number of bedrooms
+      # the name attribute in the search form is set in the url !!
+      if 'bedrooms' in request.GET:
+          bedrooms = request.GET['bedrooms']  # search for the name of 'bedrooms' in the form 
+          if bedrooms:
+              queryset_list = queryset_list.filter(bedrooms__lte=bedrooms)
+
+
+      context = { 
+                  'state_choices': state_choices, 
+                  'bedroom_choices': bedroom_choices, 
+                  'price_choices': price_choices,
+                  'listings': queryset_list,
+                  }
+      return render(request, 'listings/search.html', context)
+  -->
+
+  <!-- queryset_list retrieves the data from the database
+       request.GET retrieves the data from the url
+       keywords in the url are set in the template form with the name= tag
+
+        def search(request):
+            queryset_list = Listing.objects.order_by('-list_date').filter(is_published=True)
+
+            # keywords, filter on keywords
+            if 'keywords' in request.GET:
+                # make a variable keywords, retrieving the value from the keywords variable in the url
+                keywords = request.GET['keywords']
+                # use if to make sure not empty list
+                if keywords:
+                    # take querysetlist and set a filter defined by the keywords values
+                    # (search with description, is no search for an exact match, use contains
+                    # use  __ after the fieldname than the matchfor-word set to the keywords we search for
+                    queryset_list = queryset_list.filter(description__icontains=keywords)
+
+
+
+            # for city use exact comparing
+            # using __iexact  the comare is case insensetive
+            if 'city' in request.GET:
+                city = request.GET['city']
+                if city:
+                    queryset_list = queryset_list.filter(city__iexact=city)
+  -->
+  <!--
+    preserve the form input
+    so not every word needs to be changes when searching is fine tuned
+    multiple keywords in the url is:
+    http://localhost:8000/listings/search?keywords=pool%2C+garage%2C+porch&city=
+
+        context = { 
+                  'state_choices': state_choices, 
+                  'bedroom_choices': bedroom_choices, 
+                  'price_choices': price_choices,
+                  'listings': queryset_list,
+                  # pass in the whole url of the search  in the context
+                  # so all search items can be used in one value object in the template
+                  'values': request.GET
+                  }
+        return render(request, 'listings/search.html', context)
+
+
+    to fetch values from the url 
+    it must be submitted with the form, what is submitted in the url is the name tag as keys
+    so attach the value of the name tags to the value variable
+    in templates/listings/search.html  
+            <div class="col-md-4 mb-3">
+              <label class="sr-only">Keywords</label>
+              <input type="text" name="keywords" class="form-control"
+                  placeholder="Keyword (Pool, Garage, etc)" value="{{ values.keywords }}">
+            </div>
+  -->
+</body>
+</html>

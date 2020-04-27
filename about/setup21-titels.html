@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        set page titles in browser dynamic
+        in every template
+
+        in the title the compagny name (for google search) and pagetitle
+
+        in templates/base.html
+                <title>Devtodeploy {% block title %}{% endblock %}</title>
+
+
+        in other templates
+        index.html
+                {% block title %} | Welcome {% endblock %}
+                {% block title %} | About {% endblock %}
+
+        in listing the title of the listing:
+                {% block title %} | {{ listing.title }} {% endblock %}
+    -->
+</body>
+</html>

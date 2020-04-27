@@ -14,11 +14,15 @@
 -->
 {% load humanize %}
 
+{% block title %} | Welcome {% endblock %}
+
 
 {% block content %}
 <!--  <h1>Homepage of Djangodevtodeploy</h1>  -->
 <!-- Showcase -->
-<section id="showcase">
+<section id="showcase"> 
+    <!-- messages for showing after login (auto)-->
+    {% include 'partials/_messages.html' %}
     <div class="container text-center">
         <div class="home-search p-5">
             <div class="overlay p-5">
@@ -48,7 +52,9 @@
                             <div class="col-md-4 mb-3">
                                 <label class="sr-only">State</label>
                                 <select name="state" class="form-control">
-                                    <option selected="true" disabled="disabled">State (All)</option>
+                                    <option selected="true" disabled="disabled">State</option>
+                                    <!-- loop over key-value, (both)
+                                    key for option tag value, and actual value in the option output -->
                                     {% for key,value in state_choices.items %}
                                         <option value="{{key}}">{{ value }}</option>
                                     {% endfor %}
@@ -113,6 +119,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="sr-only">Bedrooms</label>
                                 <select name="bedrooms" class="form-control">
+                                    <option selected="true" disabled="disabled">Bedrooms</option>
                                     {% for key,value in bedroom_choices.items %}
                                         <option value="{{key}}">{{ value }}</option>
                                     {% endfor %}
@@ -133,6 +140,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <select name="price" class="form-control" id="type">
+                                    <option selected="true" disabled="disabled">Max Price</option>
                                     {% for key,value in price_choices.items %}
                                         <option value="{{key}}">{{ value }}</option>
                                     {% endfor %}

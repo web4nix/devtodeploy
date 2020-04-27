@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from listings.models import Listing
 from realtors.models import Realtor
+# import dictionaries for search
 from listings.choices import state_choices, bedroom_choices, price_choices
 # Create your views here.
 
@@ -14,6 +15,8 @@ def index(request):
                 'price_choices': price_choices
                  }
     return render(request, 'pages/index.html', context)
+
+
 
 
 def about(request):

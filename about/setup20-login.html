@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        cretae the login
+        accounts/views.py
+
+        def login
+
+
+                def login(request):
+                    if request.method == 'POST':
+                        # retrieve inlog credentials from the POST request
+                        username = request.POST['username']
+                        password = request.POST['password']
+                        # authentication against the database:
+                        user = auth.authenticate(username=username, password=password)
+
+                        # login user
+                        if user is not None:   # means it is found
+                            auth.login(request, user)
+                            #messages.success(request, 'you are logged in')
+                            messages.success(request, 'Welcome {}'.format(user.username))
+                            return redirect('dashboard')
+                        else:
+                            messages.error(request, 'you are not a registered user')
+                            return redirect('login')
+                        
+                    else:
+                        return render(request, 'accounts/login.html')
+    -->
+    <!--
+        bring in the markup in templates/accounts/dashboard.html
+
+        {% extends 'base.html' %}
+
+        {% block content %}
+        markup here
+        {% endblock %}
+    -->
+
+    <!--
+        after login to dashboard  do not shw  register or login in navbar
+
+        and create a logout link
+        this must be POST, therefor we need a form
+        make it look like a link
+
+
+                        <ul class="navbar-nav ml-auto">    <!-- do not display this part when in dashboard -->
+                        {% if user.is_authenticated %}
+                        <li 
+                        {% if 'dashboard' in request.path %}
+                            class="nav-item active mr-3"
+                        {% else %}
+                            class="nav-item mr-3"
+                        {% endif %}>
+                            <a class="nav-link" href="{% url 'dashboard' %}">
+                            Welcome {{ user.username }} Dashboard</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>Logout
+                        </a><!-- make a post request to logout-->
+                        <form action="{% url 'logout'%}" method="POST" id="logout">{% csrf_token %}
+                            <input type="hidden">
+                        </form>
+                        </li>
+                        {% else %}
+                        <li 
+                        {% if 'register' in request.path %}
+    -->
+    <!--
+        setup the views.py  logout def
+
+                def logout(request):
+                    if request.method == "POST"
+                        auth.logout(request)
+                        message.success(request, 'You are logged out')
+                    return redirect('index')
+    -->
+</body>
+</html>

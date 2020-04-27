@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        setup the django message alerts on all input tags in the registerform
+
+                from django.contrib.auth.models import User
+
+                # Create your views here.
+
+                def register(request):
+                    if request.method == 'POST':
+
+                        # get formfield input values from the url
+                        first_name = request.POST['first_name']
+                        last_name = request.POST['last_name']
+                        username = request.POST['username']
+                        email = request.POST['email']
+                        password = request.POST['password']
+                        password2 = request.POST['password2']
+
+                        #validations
+                        # check passwords match
+                        if password == password2:
+                            # check username exists (in database)
+                            # objects retrieves from database
+                            # filter on username, checking username database on the input username
+                            if User.objects.filter(username=username).exists():
+                                messages.error(request, 'This username is already taken')
+                                return redirect('register')
+                            else:
+                                if User.objects.filter(email=email).exists():
+                                    messages.error(request, 'This email is already being used')
+                                    return redirect('register')
+                                else:
+                                    return 
+                        else:
+                            messages.error(request, 'Passwords do not match')
+                            #return render(request, 'accounts/register.html')
+                            return redirect('register')
+                    else:
+                        return render(request, 'accounts/register.html')
+    -->
+
+    <!--
+        like the searchform it should keep the input after an error message         !!!!!!
+
+        django Users is not the same as Realtors
+        Users need authentication and authorization  (admin rights)
+    -->
+    <!--
+        if validation success, create user
+        using objects from database
+        and method create_user() ,, wich takes all inputfields for the database
+        then save
+
+
+
+
+
+
+        add messagefield in index, when redirecting after login to index
+        show success
+        templates/pages/index.html
+    -->
+    <!--
+        the accounts/view.py/
+        register method with auto login
+
+                from django.shortcuts import render, redirect
+                from django.contrib import messages, auth
+                # import User model to check if user exists in the database
+                from django.contrib.auth.models import User
+                # import the login method is attribute of auth
+
+
+                # Create your views here.
+
+                def register(request):
+                    if request.method == 'POST':
+                        #print('submit post request')  test for post
+                        #return redirect('register') test fot post
+                        # test message (always error here)
+                        # messages.error(request, 'testing error messages')
+
+                        # get formfield input values from the url
+                        first_name = request.POST['first_name']
+                        last_name = request.POST['last_name']
+                        username = request.POST['username']
+                        email = request.POST['email']
+                        password = request.POST['password']
+                        password2 = request.POST['password2']
+
+                        #validations
+                        # check passwords match
+                        if password == password2:
+                            # check username exists (in database)
+                            # objects retrieves from database
+                            # filter on username, checking username database on the input username
+                            if User.objects.filter(username=username).exists():
+                                messages.error(request, 'This username is already taken')
+                                return redirect('register')
+                            else:
+                                if User.objects.filter(email=email).exists():
+                                    messages.error(request, 'This email is already being used')
+                                    return redirect('register')
+                                else:
+                                    #return
+                                    # on success create variable holding all input values
+                                    # create_user() 
+                                    user = User.objects.create_user(username=username, password=password, email=email,
+                                                    first_name=first_name, last_name=last_name)
+                                    # auto login, after registration
+                                    user.save()
+                                    auth.login(request, user)
+                                
+                                    messages.success(request, 'You are now logged in as {}'.format(user.username))
+                                    return redirect('index')
+                                    messages.success(request, 'You are now logged in as {}'.format(user.username))
+                                    # or login manually
+
+                        else:
+                            messages.error(request, 'Passwords do not match')
+                            #return render(request, 'accounts/register.html')
+                            return redirect('register')
+
+
+                    else:
+                        return render(request, 'accounts/register.html')
+    -->
+    <!--
+        setup the login
+    -->
+</body>
+</html>

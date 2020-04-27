@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        in templates/listings/listing.html
+        section:
+        <!-- Inquiry Modal --> 
+
+          <form>
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+    -->
+    <!--
+
+          <form action="{% url 'contact' %}" method="POST">{% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="{{ listing.title }}" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" 
+                        {% if user.is_authenticated %} 
+                        value="{{  user.name }}" 
+                        {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" 
+                        {% if user.is_authenticated %} 
+                        value="{{  user.name }}" 
+                        {% endif %} required>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+    -->
+
+    <!--
+        Reverse for 'contact' not found. 'contact' is not a valid view function or pattern name.
+
+        this error means ther is no url for contact
+        in contacts/urls.py
+                from django.urls import path()
+
+                from . import views
+
+
+                urlpatterns = [
+                    path('contact', views.contact, name='contact')
+                ]
+
+    -->
+    <!-- 
+        register in the src/urls.py   add
+                    path('contacts/', include('contacts.urls')),
+    -->
+
+    <!--
+        add a view method in
+        contacts/views.py
+                def contact(request):
+                    return
+
+        test
+    -->
+
+
+    <!-- we send a token (hidden)
+         and form fields are pre filed when user is regitrated and loggedin
+
+
+                 <form action="{% url 'contact' %}" method="POST">{% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+            <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="{{ listing.title }}" disabled>
+            </div>
+            
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" 
+                        {% if user.is_authenticated %} 
+                        value="{{  user.username }}" 
+                        {% endif %} required>      <!--{{ user.first_name }}{{ user,last_name }}-->
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="col-form-label">Email:</label>
+                      <input type="email" name="email" class="form-control" 
+                                {% if user.is_authenticated %} 
+                                value="{{  user.email }}" 
+                                {% endif %} required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="phone" class="col-form-label">Phone:</label>
+                      <input type="text" name="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="message" class="col-form-label">Message:</label>
+                      <textarea name="message" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <input type="submit" value="Send" class="btn btn-block btn-secondary">
+                  </form>
+    -->
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator 
 from .models import Listing
+from .choices import state_choices, bedroom_choices, price_choices
 
 # Create your views here.
 
@@ -57,4 +58,58 @@ def listing(request, listing_id):
 
 
 def search(request):
-    return render(request, 'listings/search.html')
+    #listings = Listing.objects.order_by('-list_date').filter(is_published=True)
+    # define a query depending on a filter                        also filter on if published !!!
+    # search for a keyword if exists make a GET request
+    queryset_list = Listing.objects.order_by('-list_date').filter(is_published=True)
+
+    #keywords, filter on keeywords
+    if 'keywords' in request.GET:
+        # make a variable keywords, retrieving the value from the keywords varibla in the url
+        keywords = request.GET['keywords']
+        # make sure not empty list
+        if keywords:
+            # take querysetlist and set a filter
+            # search description, is not an exact match, use __ after the field we search
+            queryset_list = queryset_list.filter(description__icontains=keywords)
+
+    # for city use exact comparing
+    # using __iexact  the comare is case insensetive
+    if 'city' in request.GET:
+        city = request.GET['city']
+        if city:
+            queryset_list = queryset_list.filter(city__iexact=city)
+
+
+    #Filter by exact state
+    if 'state' in request.GET:
+        state = request.GET['state']
+        if state:
+            queryset_list = queryset_list.filter(state__iexact=state)
+
+    #Filter by max bedrooms
+    #  __lte  (less then or equel)  --search up to number of bedrooms
+    # the name attribute in the search form is set in the url !!
+    if 'bedrooms' in request.GET:
+        bedrooms = request.GET['bedrooms']  # search for the name of 'bedrooms' in the form 
+        if bedrooms:
+            queryset_list = queryset_list.filter(bedrooms__gte=bedrooms)
+
+    #Filter by max price
+    if 'price' in request.GET:
+        price = request.GET['price']
+        if price:
+            queryset_list = queryset_list.filter(price__lte=price)
+
+
+    context = { 
+                'state_choices': state_choices, 
+                'bedroom_choices': bedroom_choices, 
+                'price_choices': price_choices,
+                'listings': queryset_list,
+                # pass in the whole url of the search  in the context
+                # so all search items can be used in one value object in the template
+                'values': request.GET
+                 }
+    return render(request, 'listings/search.html', context)
+
